@@ -43,7 +43,7 @@ if (require.main === module) {
     const [,, sbomPath, ...roots] = process.argv
 
     if (!sbomPath || !roots.length) {
-        console.error ('Usage: npx npm-sbom-filter <sbom.json> <pkg1> <pkg2> ...')
+        console.error ('Usage: npx sbom-filter <sbom.json> <pkg1> <pkg2> ...')
         process.exit (1)
     }
 
