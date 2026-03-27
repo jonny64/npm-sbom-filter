@@ -1,0 +1,15 @@
+{
+  "name": "npm-sbom-filter",
+  "version": "1.0.0",
+  "description": "Filter CycloneDX SBOM to components reachable from given root packages",
+  "main": "index.js",
+  "bin": {
+    "npm-sbom-filter": "index.js"
+  },
+  "scripts": {
+    "test": "node --test tests/*.js"
+  },
+  "keywords": ["sbom", "cyclonedx", "sca"],
+  "author": "jonny64",
+  "license": "MIT"
+}
