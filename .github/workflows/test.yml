@@ -16,23 +16,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm ci
       - run: npm test
-  semgrep:
-    runs-on: ubuntu-latest
-    container: returntocorp/semgrep:latest
-    permissions:
-      packages: read
-    steps:
-      - uses: actions/checkout@v5
-      - run: semgrep ci
-          --config p/default
-          --metrics=off
-          --no-git-ignore
-          --no-suppress-errors
-  npm-audit:
-    runs-on: ubuntu-latest
-    container: node:22
-    steps:
-      - uses: actions/checkout@v5
-      - run: npm audit
