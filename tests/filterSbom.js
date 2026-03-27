@@ -42,4 +42,19 @@ describe ('filterSbom', () => {
     it ('throws when root package not found', () => {
         assert.throws (() => filterSbom (sbom, ['no-such-pkg']), /No components found/)
     })
+
+    it ('treats missing dependencies as an empty graph', () => {
+        const result = filterSbom ({
+            bomFormat   : 'CycloneDX',
+            specVersion : '1.4',
+            components  : [
+                { name: 'plain-pkg', 'bom-ref': 'plain-pkg@1.0.0', purl: 'pkg:npm/plain-pkg@1.0.0' },
+            ],
+        }, ['plain-pkg'])
+
+        assert.deepStrictEqual (result.components, [
+            { name: 'plain-pkg', 'bom-ref': 'plain-pkg@1.0.0', purl: 'pkg:npm/plain-pkg@1.0.0' },
+        ])
+        assert.deepStrictEqual (result.dependencies, [])
+    })
 })

@@ -5,6 +5,7 @@
 const fs = require ('fs')
 
 function filterSbom (sbom, roots) {
+    const dependencies = sbom.dependencies || []
     const rootRefs = sbom.components
         .filter (c => roots.some (r => {
             if (r.startsWith ('@')) {
@@ -19,7 +20,7 @@ function filterSbom (sbom, roots) {
         throw new Error ('No components found for: ' + roots.join (', '))
 
     const depMap = {}
-    for (const d of sbom.dependencies)
+    for (const d of dependencies)
         depMap [d.ref] = d.dependsOn || []
 
     const visited = new Set ()
@@ -33,7 +34,7 @@ function filterSbom (sbom, roots) {
     return {
         ...sbom,
         components   : sbom.components.filter (c => visited.has (c ['bom-ref'])),
-        dependencies : sbom.dependencies
+        dependencies : dependencies
             .filter (d => visited.has (d.ref))
             .map    (d => ({ ...d, dependsOn: (d.dependsOn || []).filter (r => visited.has (r)) })),
     }
